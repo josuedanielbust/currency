@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+  redis:
+    image: redis/redis-stack-server:latest
+    restart: unless-stopped
+    hostname: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+
+  back:
+    build:
+      context: ./back/
+      dockerfile: Dockerfile
+      args:
+        REDIS_HOST: redis
+        API_URL: ${API_URL}
+        API_KEY: ${API_KEY}
+        CURRENCY_FROM: ${CURRENCY_FROM}
+        CURRENCY_TO: ${CURRENCY_TO}
+    container_name: currency-back
+    restart: unless-stopped
+    hostname: back
+    working_dir: /var/www
+    ports:
+      - 3001:3001
+    depends_on:
+      - redis
+
+  front:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+      args:
+        API_URL: http://back:3001
+        CURRENCY_FROM: ${CURRENCY_FROM}
+        CURRENCY_TO: ${CURRENCY_TO}
+    container_name: currency-front
+    restart: unless-stopped
+    working_dir: /var/www
+    ports:
+      - 3000:3000
+    depends_on:
+      - redis
+      - back
+
+volumes:
+  redis-data:
