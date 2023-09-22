@@ -28,10 +28,10 @@ API_KEY=YOUR_API_KEY
 CURRENCY_FROM=USD
 CURRENCY_TO=BRL
 ```
-  - `API_URL` is the URL of the [Currency Converter API][#1]
-  - `API_KEY` is the API Key of the [Currency Converter API][#1]
-  - `CURRENCY_FROM` is the currency that you want to convert from
-  - `CURRENCY_TO` is the currency that you want to convert to
+    - `API_URL` is the URL of the [Currency Converter API][#1]
+    - `API_KEY` is the API Key of the [Currency Converter API][#1]
+    - `CURRENCY_FROM` is the currency that you want to convert from
+    - `CURRENCY_TO` is the currency that you want to convert to
 - Run `docker-compose build` to build the application
 - Run `docker-compose up -d redis` to start the Redis Stack Server on detached mode
 - Run `docker-compose up -d back` to start the backend on detached mode
